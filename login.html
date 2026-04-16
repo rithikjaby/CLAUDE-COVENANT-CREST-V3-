@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Covenant Crest Group Ltd</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0D1B2A;--navy2:#162236;--gold:#C9A84C;--gold2:#E8C96A;--cream:#FAF7F0;--border:#E8E4DC;--muted:#7A8694;--success:#1D9E75;--danger:#E24B4A;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{background:var(--navy);font-family:'Montserrat',sans-serif;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;position:relative;overflow:hidden;}
+/* bg grid */
+body::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.022) 1px,transparent 1px);background-size:70px 70px;pointer-events:none;}
+/* glow */
+body::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.05) 0%,transparent 60%);pointer-events:none;}
+/* CARD */
+.login-card{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:44px 40px;width:100%;max-width:400px;text-align:center;position:relative;z-index:1;}
+/* LOGO */
+.login-logo{margin-bottom:20px;}
+.login-logo-name{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;margin:12px 0 3px;}
+.login-logo-name span{color:var(--gold);}
+.login-badge{font-size:9px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,168,76,.5);display:block;margin-bottom:28px;}
+/* HEADING */
+.login-h{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;margin-bottom:5px;}
+.login-sub{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:28px;}
+/* FIELDS */
+.lf{margin-bottom:14px;text-align:left;}
+.lf label{display:block;font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px;}
+.lf input{width:100%;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.18);border-radius:4px;font-family:'Montserrat',sans-serif;font-size:14px;color:#fff;outline:none;transition:border-color .2s;letter-spacing:.04em;}
+.lf input:focus{border-color:rgba(201,168,76,.55);}
+.lf input::placeholder{color:rgba(255,255,255,.2);letter-spacing:.04em;}
+/* BUTTON */
+.login-btn{width:100%;background:var(--gold);color:var(--navy);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:13px;border:none;border-radius:2px;cursor:pointer;transition:all .2s;margin-top:6px;}
+.login-btn:hover{background:var(--gold2);}
+.login-btn:active{transform:scale(.99);}
+/* ERROR / SUCCESS */
+.login-err{color:var(--danger);font-size:12px;margin-top:12px;display:none;padding:10px 12px;background:rgba(226,75,74,.1);border:1px solid rgba(226,75,74,.25);border-radius:4px;}
+.login-err.show{display:block;}
+.login-ok{color:var(--success);font-size:12px;margin-top:12px;display:none;padding:10px 12px;background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);border-radius:4px;}
+.login-ok.show{display:block;}
+/* DIVIDER */
+.login-divider{display:flex;align-items:center;gap:12px;margin:22px 0;}
+.login-divider span{font-size:10px;color:rgba(255,255,255,.18);white-space:nowrap;}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+/* SETUP LINK */
+.setup-link{font-size:11px;color:rgba(255,255,255,.25);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'Montserrat',sans-serif;}
+.setup-link:hover{color:var(--gold);}
+/* SETUP PANEL */
+.setup-panel{display:none;margin-top:22px;text-align:left;border-top:1px solid rgba(255,255,255,.08);padding-top:22px;}
+.setup-panel.show{display:block;}
+.sp-title{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+/* BACK LINK */
+.back-link{display:inline-block;margin-top:24px;font-size:11px;color:rgba(255,255,255,.22);text-decoration:none;transition:color .2s;}
+.back-link:hover{color:var(--gold);}
+/* HINT */
+.login-hint{font-size:10px;color:rgba(255,255,255,.15);margin-top:16px;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="login-logo">
+    <svg width="34" height="34" viewBox="0 0 80 80" fill="none"><path d="M40 4L72 18L72 44C72 60 57 72 40 76C23 72 8 60 8 44L8 18Z" fill="none" stroke="#C9A84C" stroke-width="1.5"/><line x1="40" y1="22" x2="40" y2="58" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="22" y1="40" x2="58" y2="40" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><rect x="37" y="37" width="6" height="6" fill="#C9A84C" transform="rotate(45 40 40)"/></svg>
+    <div class="login-logo-name">Covenant <span>Crest</span></div>
+    <span class="login-badge">Admin Portal</span>
+  </div>
+
+  <div class="login-h">Welcome Back</div>
+  <p class="login-sub">Sign in to manage your business dashboard.</p>
+
+  <!-- LOGIN FORM -->
+  <div id="loginPanel">
+    <div class="lf">
+      <label>Email Address</label>
+      <input type="email" id="li-email" placeholder="admin@covenantcrest.co.uk" autocomplete="email">
+    </div>
+    <div class="lf">
+      <label>Password</label>
+      <input type="password" id="li-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()" id="loginBtn">Sign In &#8594;</button>
+    <div class="login-err" id="loginErr">Incorrect email or password. Please try again.</div>
+
+    <div class="login-divider"><span>First time?</span></div>
+    <button class="setup-link" onclick="toggleSetup()">Create admin account</button>
+  </div>
+
+  <!-- SETUP PANEL -->
+  <div class="setup-panel" id="setupPanel">
+    <div class="sp-title">Create Admin Account</div>
+    <div class="lf">
+      <label>Email Address</label>
+      <input type="email" id="su-email" placeholder="admin@covenantcrest.co.uk">
+    </div>
+    <div class="lf">
+      <label>Password (min 8 characters)</label>
+      <input type="password" id="su-pass" placeholder="Choose a secure password">
+    </div>
+    <div class="lf">
+      <label>Confirm Password</label>
+      <input type="password" id="su-pass2" placeholder="Repeat password">
+    </div>
+    <button class="login-btn" onclick="doSetup()" id="setupBtn">Create Account &#8594;</button>
+    <div class="login-err" id="setupErr"></div>
+    <div class="login-ok" id="setupOk">Account created! You can now sign in.</div>
+  </div>
+
+  <div class="login-hint" id="loginHint">Your credentials are stored securely in your browser.<br>Default password on first use: <strong style="color:rgba(201,168,76,.5);">covenant2025</strong></div>
+
+  <a href="/" class="back-link">&#8592; Back to website</a>
+</div>
+
+<script>
+var PASS_KEY='cc_adminpwd';
+var EMAIL_KEY='cc_adminemail';
+
+function getPass(){return localStorage.getItem(PASS_KEY)||'covenant2025';}
+function getEmail(){return localStorage.getItem(EMAIL_KEY)||'admin@covenantcrest.co.uk';}
+
+// If already logged in, redirect
+if(localStorage.getItem('cc_auth')==='1'){window.location.href='/admin.html';}
+
+function doLogin(){
+  var email=document.getElementById('li-email').value.trim().toLowerCase();
+  var pass=document.getElementById('li-pass').value;
+  var btn=document.getElementById('loginBtn');
+  var errEl=document.getElementById('loginErr');
+  errEl.classList.remove('show');
+  btn.textContent='Checking\u2026';
+  btn.disabled=true;
+
+  setTimeout(function(){
+    // 1. Check Super Admin credentials
+    if(email===getEmail().toLowerCase()&&pass===getPass()){
+      localStorage.setItem('cc_auth','1');
+      localStorage.setItem('cc_authEmail',email);
+      localStorage.setItem('cc_authRole','superadmin');
+      window.location.href='/admin.html';
+      return;
+    }
+    // 2. Check Employee accounts (stored in cc_users array)
+    try{
+      var users=JSON.parse(localStorage.getItem('cc_users')||'[]');
+      var match=users.find(function(u){return u.email.toLowerCase()===email&&u.pwd===pass&&u.role==='employee';});
+      if(match){
+        localStorage.setItem('cc_auth','1');
+        localStorage.setItem('cc_authEmail',match.email);
+        localStorage.setItem('cc_authRole','employee');
+        window.location.href='/admin.html';
+        return;
+      }
+    }catch(e){}
+    // 3. No match
+    errEl.textContent='Incorrect email or password. Please try again.';
+    errEl.classList.add('show');
+    btn.textContent='Sign In \u2192';
+    btn.disabled=false;
+  },600);
+}
+
+function toggleSetup(){
+  var p=document.getElementById('setupPanel');
+  p.classList.toggle('show');
+  if(p.classList.contains('show')){
+    document.getElementById('loginHint').style.display='none';
+  }
+}
+
+function doSetup(){
+  var email=document.getElementById('su-email').value.trim();
+  var pass=document.getElementById('su-pass').value;
+  var pass2=document.getElementById('su-pass2').value;
+  var errEl=document.getElementById('setupErr');
+  var okEl=document.getElementById('setupOk');
+  errEl.classList.remove('show');
+  okEl.classList.remove('show');
+
+  if(!email||!email.includes('@')){errEl.textContent='Please enter a valid email address.';errEl.classList.add('show');return;}
+  if(pass.length<8){errEl.textContent='Password must be at least 8 characters.';errEl.classList.add('show');return;}
+  if(pass!==pass2){errEl.textContent='Passwords do not match.';errEl.classList.add('show');return;}
+
+  localStorage.setItem(PASS_KEY,pass);
+  localStorage.setItem(EMAIL_KEY,email);
+
+  var btn=document.getElementById('setupBtn');
+  okEl.classList.add('show');
+  btn.textContent='Account Created \u2713';
+  btn.disabled=true;
+  document.getElementById('li-email').value=email;
+  setTimeout(function(){
+    document.getElementById('setupPanel').classList.remove('show');
+    document.getElementById('loginHint').style.display='block';
+    document.getElementById('loginHint').textContent='Super Admin account created. Enter your password above to sign in.';
+    btn.textContent='Create Account \u2192';
+    btn.disabled=false;
+  },2500);
+}
+</script>
+</body>
+</html>
